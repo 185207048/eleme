@@ -20,25 +20,45 @@
                             </el-input>
                         </li>
                         <li>|</li>
-                        <li>登录</li>
+                        <li @click="login">登录</li>
                         <li>
-                            <div class="header-register">注册</div>
+                            <div class="header-register" @click="register">注册</div>
                         </li>
                     </ul>
                 </span>
+                <div class="my-login">
+                    <Login />
+                </div>
             </div>
 </template>
 <script>
+import Login from './Login'
 export default {
     name:'header',
     data(){
         return{}
+    },
+    components:{
+        Login,
+    },
+    methods:{
+        login(){
+            console.log("login")
+        },
+        register(){
+            console.log("register")
+        }
     }
 }
 </script>
 <style scoped>
 *{
     list-style: none;
+}
+.my-login{
+    position: absolute;
+    left: 40%;
+    top:100%
 }
 .el-header{
     padding: 0;
