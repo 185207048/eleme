@@ -26,7 +26,7 @@
                         </li>
                     </ul>
                 </span>
-                <div class="my-login">
+                <div class="my-login" v-if="login_hidden">
                     <Login />
                 </div>
             </div>
@@ -36,17 +36,19 @@ import Login from './Login'
 export default {
     name:'header',
     data(){
-        return{}
+        return{
+            login_hidden:false
+        }
     },
     components:{
         Login,
     },
     methods:{
         login(){
-            console.log("login")
+            this.login_hidden = !this.login_hidden
         },
         register(){
-            console.log("register")
+            this.login_hidden = !this.login_hidden
         }
     }
 }
@@ -58,7 +60,7 @@ export default {
 .my-login{
     position: absolute;
     left: 40%;
-    top:100%
+    top:100%;
 }
 .el-header{
     padding: 0;
