@@ -20,32 +20,89 @@
                             </el-input>
                         </li>
                         <li>|</li>
-                        <li @click="login">登录</li>
+                        <li @click="dialogVisible = true">登录</li>
                         <li>
                             <div class="header-register" @click="register">注册</div>
                         </li>
                     </ul>
                 </span>
-                <div class="my-login" v-if="login_hidden">
-                    <Login />
+
+        <el-dialog
+                style="height: 1000px"
+                :modal-append-to-body="false"
+                title="开发者账号登录"
+                :visible.sync="dialogVisible"
+                width="480px"
+                :before-close="handleClose"
+        >
+            <div  style="    color: #8492a6;
+        text-align: left;
+        margin-top: -24px;">一个应用可以授权多个商家</div>
+            <el-input style="margin-top: 24px;"  v-model="username" placeholder="开发者账号"></el-input>
+            <el-input style="margin-top: 24px;" type="password" v-model="password" placeholder="密码"></el-input>
+            <div style="  display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 12px;">
+                    <span style=" color: #20a0ff;
+        cursor: pointer;
+        padding-bottom: 6px;">忘记密码</span>
+                <span style=" color: #20a0ff;
+        cursor: pointer;
+        padding-bottom: 6px;">手机验证码登陆</span>
+            </div>
+            <div style="  display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 12px; ">
+                <el-button style="width: 170px" type="primary" @click="login">登录</el-button>
+                <el-button style="width: 170px" @click="register">注册</el-button>
+            </div>
+            <el-divider></el-divider>
+            <div style="  display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 12px;">
+                <div style="display: flex;
+        flex-direction: column;
+        color: #8492a6;">
+                    <span style="color:#1f2d3d">商家账号登陆</span>
+                    <span style=" color: #20a0ff;
+        cursor: pointer;
+        padding-bottom: 6px;">直接接入当前商家，无需授权</span>
                 </div>
+                <div>></div>
+            </div>
+        </el-dialog>
+
+
+
             </div>
 </template>
 <script>
-import Login from './Login'
+
 export default {
     name:'header',
     data(){
         return{
-            login_hidden:false
+            login_hidden:false,
+            dialogVisible: false,
+            username: "",
+            password: ""
         }
-    },
-    components:{
-        Login,
     },
     methods:{
         login(){
-            this.login_hidden = !this.login_hidden
+            if (this.username && this.password) {
+                if (/^1[3456789]\d{9}$/.test(this.username)) {
+                    this.$message("登录成功!");
+                    this.dialogVisible = false;
+                } else {
+                    this.$message("手机号格式不正确!");
+                }
+            } else {
+                this.$message("有空项!");
+            }
         },
         register(){
             this.login_hidden = !this.login_hidden
@@ -82,7 +139,7 @@ export default {
   .el-container:nth-child(6) .el-aside {
     line-height: 260px;
   }
-  
+
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
@@ -97,7 +154,7 @@ export default {
   .el-carousel__item:nth-child(2n) {
      background-color: #99a9bf;
   }
-  
+
   .el-carousel__item:nth-child(2n+1) {
      background-color: #d3dce6;
   }
@@ -172,7 +229,7 @@ export default {
       border: 1px solid white;
       border-radius: 30px ;
   }
-  
+
   .header-carousel{
       height: 550px;
       width: 100%;
@@ -183,5 +240,5 @@ export default {
       background-image: url("../assets/image/back2.jpg");
       background-size: 100% 100%;
   }
-  
+
 </style>
